@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💚</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #1b3a3a, #000);
+  text-align: center;
+  overflow: hidden;
+}
+
+h1 {
+  color: white;
+  margin-top: 20px;
+  text-shadow: 0 0 15px rgba(0,255,200,0.6);
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  padding: 25px;
+}
+
+.gallery img {
+  width: 220px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 18px;
+  cursor: pointer;
+  position: relative;
+  border: 2px solid rgba(0,255,180,0.6);
+  box-shadow:
+    0 0 20px rgba(0,255,180,0.6),
+    0 0 40px rgba(0,120,255,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 30px rgba(0,255,200,0.9),
+    0 0 70px rgba(0,150,255,0.8);
+}
+
+/* floating hearts */
+.heart {
+  position: fixed;
+  bottom: -10px;
+  font-size: 20px;
+  animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* avatar particles */
+.particle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0,255,200,0.8);
+  box-shadow: 0 0 10px rgba(0,255,200,1);
+  animation: floatParticle 8s linear forwards;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120vh) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* secret modal */
+#secretModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.secretBox {
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 330px;
+  box-shadow: 0 0 50px rgba(0,255,200,0.9);
+}
+
+.secretBox h2 {
+  color: #1f8f7a;
+}
+
+.secretBox p {
+  color: #333;
+  font-size: 1.05rem;
+}
+
+.secretBox button {
+  margin-top: 15px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 20px;
+  background: #1f8f7a;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Happy Valentine’s Day 💚</h1>
+
+<div class="gallery">
+  <img src="draco1.jpg">
+  <img src="draco2.jpg">
+  <img src="draco3.jpg">
+  <img src="draco4.jpg">
+  <img src="draco5.jpg">
+  <img src="draco6.jpg">
+  <img src="draco7.jpg">
+  <img src="draco8.jpg">
+  <img src="draco9.jpg">
+</div>
+
+<!-- secret message -->
+<div id="secretModal">
+  <div class="secretBox">
+    <h2>💚 Secret Unlocked 💚</h2>
+    <p>
+      You have the Draco Malfoy aura…<br>
+      but the golden retriever heart 🐶❤️<br><br>
+      And somehow,<br>
+      you feel like home to me.
+    </p>
+    <button onclick="closeSecret()">Close</button>
+  </div>
+</div>
+
+<script>
+let clicks = 0;
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 10 + 15) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+
+function createParticle() {
+  const p = document.createElement("div");
+  p.className = "particle";
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.bottom = "-10px";
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), 8000);
+}
+
+// continuous avatar particles
+setInterval(createParticle, 300);
+
+document.querySelectorAll(".gallery img").forEach(img => {
+  img.addEventListener("click", () => {
+    clicks++;
+
+    for (let i = 0; i < 5; i++) createHeart();
+    for (let i = 0; i < 6; i++) createParticle();
+
+    if (clicks === 3) {
+      document.getElementById("secretModal").style.display = "flex";
+    }
+  });
+});
+
+function closeSecret() {
+  document.getElementById("secretModal").style.display = "none";
+  clicks = 0;
+}
+</script>
+
+</body>
+</html>
